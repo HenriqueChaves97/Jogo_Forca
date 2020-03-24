@@ -3,25 +3,30 @@ from random import choice
 class Forca_jogo():
     def __init__(self):
         self.x = choice(["Martelo","Abelha","Aviação"])
-        self.palavra_secreta = "".join(["_." for i in self.x]).lower()
+        self.palavra_secreta = "".join(["_." for i in self.x])
         self.b = self.palavra_secreta.split('.')
         self.b.pop(-1)
     
     def Verifica(self, jogada):
-        if jogada in self.x:
+        if jogada in self.x:            
             for indice, letra in enumerate(list(self.x)):
-                if jogada == letra:
-                    self.b[indice] = jogada
-            # print(self.x,''.join(self.b))
-            print(self.b)
-            if self.x ==''.join(self.b):
-                print('parabén vc acertou!',self.x)
-                return 0
+                if jogada.lower() == letra.lower():
+                    if letra.isupper():
+                        self.b[indice] = jogada.upper()
+                    else:
+                        self.b[indice] = jogada
+            return "".join([i+"." for i in self.b])
         else:
-            print('não contem a letra: ',jogada)
-        return "".join([i+"." for i in self.b])
+            print("\n Errou!")
+            return "".join([i+"." for i in self.b])
 
 def main():
     forca = Forca_jogo()
-    while forca.Verifica(input("Digite uma letra: ").lower().strip()): pass
+    while True:  
+        secret = forca.Verifica(input("Digite uma letra: "))
+        if secret.replace(".","") == forca.x:
+            print(f"\n Você ganhou!")
+            print(secret)
+            break
+        print(f"\n {secret}")
 main()
