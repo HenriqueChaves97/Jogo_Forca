@@ -2,8 +2,8 @@ from random import choice
 
 class Forca_jogo():
     def __init__(self):
-        self.x = choice(["Martelo","Abelha","Aviação"])
-        self.palavra_secreta = "".join(["_." for i in self.x])
+        self.x = choice(["aaab","abbb","ab"])
+        self.palavra_secreta = "".join(["_." for i in self.x]).lower()
         self.b = self.palavra_secreta.split('.')
         self.b.pop(-1)
     
@@ -12,11 +12,16 @@ class Forca_jogo():
             for indice, letra in enumerate(list(self.x)):
                 if jogada == letra:
                     self.b[indice] = jogada
-            return "".join([i+"." for i in self.b])
+            # print(self.x,''.join(self.b))
+            print(self.b)
+            if self.x ==''.join(self.b):
+                print('parabén vc acertou!',self.x)
+                return 0
+        else:
+            print('não contem a letra: ',jogada)
+        return "".join([i+"." for i in self.b])
 
 def main():
     forca = Forca_jogo()
-    while True:        
-        secret = forca.Verifica(input("Digite uma letra: "))
-        print(secret)
+    while forca.Verifica(input("Digite uma letra: ").lower().strip()): pass
 main()
